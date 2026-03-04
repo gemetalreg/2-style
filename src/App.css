@@ -37,3 +37,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.enter {
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 80px;
+  letter-spacing: -2%;
+  color: rgba(235, 238, 245, 1)
+}
