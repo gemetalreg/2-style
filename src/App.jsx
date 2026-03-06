@@ -68,14 +68,12 @@ function App() {
     
     <Cards/>
 
-    <UserProvider>
       <Header loggedInProfiles={loggedInProfiles} handleLogout={handleLogout}/>
       <div style={{display: "flex", flexDirection:"column", rowGap: "27px", alignItems: "flex-start"}}>
         <span className='enter'>Вход</span>
         <InputField ref={nameRef}/>
         <Button text="Войти в профиль" onClick={handleLogin} />
       </div>
-    </UserProvider>
     </>
   )
 }
