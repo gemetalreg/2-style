@@ -6,18 +6,23 @@ import './App.css'
 import SearchFilmLine from './SearchFilmLine/SearchFilmLine'
 import Cards from './Cards/Cards'
 import InputField from './InputField/InputField';
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext  } from 'react'
+import { UserContext, UserProvider } from './context/name.context'
 
 function App() {
   const [profiles, setProfiles] = useState(() => {
     const saved = localStorage.getItem('profiles');
     return saved ? JSON.parse(saved) : [];
   });
-  const nameRef = useRef(null);
+  const nameRef = useRef('');
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+
 
   const handleLogin = () => {
     const name = nameRef.current.value.trim();
     if (!name) return;
+
+    setCurrentUser(name);
 
     const existingProfile = profiles.find(p => p.name === name);
     let newProfiles;
@@ -34,7 +39,7 @@ function App() {
 
     setProfiles(newProfiles);
     localStorage.setItem('profiles', JSON.stringify(newProfiles));
-    nameRef.current.value = null;
+    nameRef.current.value = '';
   };
 
   const handleLogout = (name) => {
@@ -43,6 +48,8 @@ function App() {
     );
     setProfiles(updatedProfiles);
     localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+    setCurrentUser(null);
+
   };
 
   const loggedInProfiles = profiles.filter(p => p.isLogined);
@@ -61,12 +68,12 @@ function App() {
     
     <Cards/>
 
-    <Header loggedInProfiles={loggedInProfiles} handleLogout={handleLogout}/>
-    <div style={{display: "flex", flexDirection:"column", rowGap: "27px", alignItems: "flex-start"}}>
-      <span className='enter'>Вход</span>
-      <InputField ref={nameRef}/>
-      <Button text="Войти в профиль" onClick={handleLogin} />
-    </div>
+      <Header loggedInProfiles={loggedInProfiles} handleLogout={handleLogout}/>
+      <div style={{display: "flex", flexDirection:"column", rowGap: "27px", alignItems: "flex-start"}}>
+        <span className='enter'>Вход</span>
+        <InputField ref={nameRef}/>
+        <Button text="Войти в профиль" onClick={handleLogin} />
+      </div>
     </>
   )
 }

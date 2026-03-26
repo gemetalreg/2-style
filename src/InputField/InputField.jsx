@@ -1,14 +1,8 @@
 import styles from "./InputField.module.css";
+import React, { forwardRef } from 'react';
 
-
-function InputField({props, ref}) {
-  return (
-    <input
-      type="text"
-      {...props}
-      ref={ref}
-    />
-  );
-}
+const InputField = forwardRef((props, ref) => {
+  return <input type="text" ref={ref} {...props}/>;
+});
 
 export default InputField;
